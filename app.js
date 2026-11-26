@@ -62,7 +62,7 @@
     if (document.hidden) $$('video').forEach(video => video.pause());
   });
   $('#print-brief').addEventListener('click', () => window.print());
-  $('#copy-link').addEventListener('click', async () => {
+  $('#copy-link')?.addEventListener('click', async () => {
     const shareUrl = window.location.href.split('#')[0];
     try { await navigator.clipboard.writeText(shareUrl); $('#copy-status').textContent = 'Link copied'; }
     catch { $('#copy-status').textContent = 'Copy the page address from your browser.'; }
