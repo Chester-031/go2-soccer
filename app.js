@@ -94,26 +94,34 @@
     $('#timeline-detail').textContent = 'Select a stage to inspect its logged duration and parallel environment count.';
   }
 
-  function renderLineChart(points) {
-    const data = points.map(point => ({ x: point.iteration, y: point.reward ?? point.meanReward })).filter(point => Number.isFinite(point.x) && Number.isFinite(point.y));
-    const target = $('#motor-chart');
-    if (!data.length) { target.textContent = 'Recorded trace unavailable.'; return; }
-    const width = 570, height = 250, margin = {left: 40, right: 15, top: 15, bottom: 36};
-    const xMin = Math.min(...data.map(point => point.x)), xMax = Math.max(...data.map(point => point.x));
-    const yMin = Math.floor(Math.min(...data.map(point => point.y)) / 10) * 10;
-    const yMax = Math.ceil(Math.max(...data.map(point => point.y)) / 10) * 10;
-    const x = value => margin.left + (value - xMin) / (xMax - xMin || 1) * (width - margin.left - margin.right);
-    const y = value => height - margin.bottom - (value - yMin) / (yMax - yMin || 1) * (height - margin.top - margin.bottom);
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('viewBox', `0 0 ${width} ${height}`); svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', `${data.length} recorded mean rewards between iterations ${xMin} and ${xMax}; first ${data[0].y.toFixed(2)}, last ${data.at(-1).y.toFixed(2)}. This is training reward, not a success rate.`);
-    let content = `<defs><linearGradient id="trace-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b927a" stop-opacity=".18"/><stop offset="1" stop-color="#3b927a" stop-opacity="0"/></linearGradient></defs>`;
-    for (let value = yMin; value <= yMax; value += 10) content += `<line class="grid-line" x1="${margin.left}" x2="${width-margin.right}" y1="${y(value)}" y2="${y(value)}"/><text x="${margin.left-10}" y="${y(value)+4}" text-anchor="end">${value}</text>`;
-    const path = data.map((point, index) => `${index ? 'L' : 'M'}${x(point.x).toFixed(2)},${y(point.y).toFixed(2)}`).join(' ');
-    content += `<path d="${path} L${x(xMax)},${y(yMin)} L${x(xMin)},${y(yMin)} Z" fill="url(#trace-fill)"/><path d="${path}" fill="none" stroke="#207660" stroke-width="2" stroke-linejoin="round"/>`;
-    [xMin, 900, 1000, xMax].filter((value,index,items) => value>=xMin && value<=xMax && items.indexOf(value)===index).forEach(value => {content += `<text x="${x(value)}" y="${height-14}" text-anchor="middle">${value}</text>`;});
-    content += `<text x="${width-15}" y="${height-1}" text-anchor="end" style="font-size:9px">PPO iteration</text>`;
-    svg.innerHTML = content; target.replaceChildren(svg);
+  function renderScoringChart(progress) {
+    const target = $('#scoring-progress-chart');
+    const axis = document.createElement('div'); axis.className = 'scoring-axis';
+    [100, 75, 50, 25, 0].forEach(value => {
+      const tick = document.createElement('span'); tick.textContent = `${value}%`; axis.append(tick);
+    });
+    const columns = document.createElement('div'); columns.className = 'scoring-columns';
+    progress.rows.forEach((row, index) => {
+      const column = document.createElement('div'); column.className = 'scoring-column';
+      column.setAttribute('aria-label', `Checkpoint ${row.iteration}: ${row.count} of ${row.n} starts passed, ${row.percent.toFixed(1)} percent`);
+      const bar = document.createElement('div'); bar.className = 'scoring-bar';
+      bar.style.height = `${row.percent}%`;
+      if (index === progress.rows.length - 1) bar.classList.add('scoring-bar-final');
+      const value = document.createElement('strong'); value.textContent = `${row.percent.toFixed(1)}%`; bar.append(value);
+      const label = document.createElement('div'); label.className = 'scoring-bar-label';
+      const iteration = document.createElement('b'); iteration.textContent = `${row.iteration / 1000}k`;
+      const count = document.createElement('span'); count.textContent = `${row.count} passed`;
+      label.append(iteration, count); column.append(bar, label); columns.append(column);
+    });
+    const plot = document.createElement('div'); plot.className = 'scoring-plot'; plot.append(axis, columns);
+    const caption = document.createElement('p'); caption.className = 'scoring-axis-caption';
+    caption.textContent = 'PPO iteration · 1,472 fixed evaluation starts per checkpoint';
+    target.replaceChildren(plot, caption);
+  }
+
+  function renderOptimization(stage) {
+    $('#optimization-gain').textContent = `Net +${stage.additionalPassing} passing starts`;
+    $('#optimization-detail').textContent = `${stage.parentCount} to ${stage.endpointCount} / ${stage.n.toLocaleString()} (${stage.parentPercent.toFixed(1)}% to ${stage.endpointPercent.toFixed(1)}%) in the final targeted-training stage.`;
   }
 
   function renderDistances(breakdown, other) {
@@ -155,12 +163,13 @@
   const dataReady = window.GO2_DATA ? Promise.resolve(window.GO2_DATA) : fetch('data.json').then(response => {if (!response.ok) throw new Error('Data unavailable'); return response.json();});
   dataReady.then(data => {
     renderTimeline(data.trainingStages);
-    renderLineChart(data.earlyMotion.series);
+    renderScoringChart(data.shootingProgress);
+    renderOptimization(data.latestOptimization);
     renderDistances(data.distanceBreakdown, data.otherConfigurations);
     renderBenchmarkGroups(data.benchmarkBreakdown);
   }).catch(() => {
     $('#training-timeline').textContent = 'Detailed training data could not be loaded.';
-    $('#motor-chart').textContent = 'Please reload to view the recorded training trace.';
+    $('#scoring-progress-chart').textContent = 'Please reload to view the fixed-benchmark scoring results.';
     $('#distance-chart').textContent = 'Please reload to view the distance breakdown.';
   });
 })();

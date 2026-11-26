@@ -7,9 +7,10 @@ physical-behavior evaluation, and the composition of learned soccer skills in
 NVIDIA Isaac Lab. Research guidance is provided by Eugene Vinitsky and Benjamin
 Rivière at New York University.
 
-The website presents simulation results and distinguishes established shooting
-performance from ongoing pursuit-and-retry research. Task-specific work builds
-on existing simulation and reinforcement-learning software.
+The website focuses on measured scoring progress, task-level training decisions,
+and demonstrated skills in simulation. Five selected shooting checkpoints use
+the same 1,472-case development benchmark. Task-specific work builds on existing
+simulation and reinforcement-learning software.
 
 ## View locally
 
