@@ -48,6 +48,12 @@
 .hero-playback-status{padding:12px 18px;margin:0;color:#d6e5dd;font-size:14px;line-height:1.5}
 .hero-playback-status[hidden]{display:none}
 .hero-playback-status a{color:#c3e8d3;text-decoration:underline}
+.video-formats{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:14px;line-height:1.6;color:var(--muted);margin:10px 0 0}
+.video-formats a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+.hero-formats{padding:0 19px 16px;margin:0;color:#b9ceca}
+.hero-formats a{color:#d6f0e0}
+.acquisition-section .video-formats,.parallel-section .video-formats{color:#b9ceca}
+.acquisition-section .video-formats a,.parallel-section .video-formats a{color:#d6f0e0}
 .parallel-intro{font-size:16px;max-width:390px;color:#bbd1c5;line-height:1.7}
 .parallel-scene{margin:0;background:#0c252b;border:1px solid #446456;border-radius:6px;overflow:hidden}
 .parallel-scene video{width:100%;aspect-ratio:16/9;display:block;object-fit:contain}
