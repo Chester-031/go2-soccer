@@ -1870,22 +1870,5 @@ window.GO2_DATA = {
       "meanReturn": 7.020440125159369
     }
   ],
-  "finalTrainingCurveScope": "Unweighted mean of available per-iteration mean_episode_return records in consecutive 20-iteration bins during the final 8,001–9,000 training stage; not evaluation success.",
-  "current": {
-    "label": "Post-miss recovery — ongoing",
-    "localLifecycleSeconds": 584.2529120290001,
-    "formalPPOUpdates": 8,
-    "formalAdamSteps": 128,
-    "formalRows": 6892,
-    "discardedCanaryPPOUpdates": 1,
-    "discardedCanaryAdamSteps": 16,
-    "nativeWorldSteps": 12108,
-    "staticContactCount": 8,
-    "staticCaseCount": 8,
-    "retainedRecoveryCount": 0,
-    "realPursuitEntryNewContacts": 0,
-    "secondKickDemonstrated": false,
-    "transientRecoveryObserved": true,
-    "status": "Temporary wall-clearance behavior was observed, but retained recovery and transfer to the real pursuit entry remain unresolved."
-  }
+  "finalTrainingCurveScope": "Unweighted mean of available per-iteration mean_episode_return records in consecutive 20-iteration bins during the final 8,001–9,000 training stage; not evaluation success."
 };

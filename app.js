@@ -2,8 +2,39 @@
   'use strict';
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const $$ = (selector, parent = document) => Array.from(parent.querySelectorAll(selector));
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reducedMotion) $('.hero-video').pause();
+  const heroVideo = $('.hero-video');
+  const heroStart = $('.hero-start');
+  const heroStatus = $('.hero-playback-status');
+  let playbackTimer;
+  function playbackFallback() {
+    clearTimeout(playbackTimer);
+    heroVideo.pause();
+    heroStart.hidden = false;
+    heroStart.disabled = false;
+    heroStart.removeAttribute('aria-busy');
+    heroStatus.hidden = false;
+    $('span', heroStatus).textContent = 'Playback could not start in this browser.';
+  }
+  heroStart.addEventListener('click', () => {
+    heroStart.disabled = true;
+    heroStart.setAttribute('aria-busy', 'true');
+    heroStatus.hidden = false;
+    $('span', heroStatus).textContent = 'Loading the demonstration…';
+    playbackTimer = setTimeout(playbackFallback, 8000);
+    heroVideo.play().catch(playbackFallback);
+  });
+  heroVideo.addEventListener('playing', () => {
+    const showVideo = () => {
+      clearTimeout(playbackTimer);
+      heroStart.hidden = true;
+      heroStart.disabled = false;
+      heroStart.removeAttribute('aria-busy');
+      heroStatus.hidden = true;
+    };
+    if (heroVideo.requestVideoFrameCallback) heroVideo.requestVideoFrameCallback(showVideo);
+    else if (heroVideo.readyState >= 2) showVideo();
+  });
+  heroVideo.addEventListener('error', playbackFallback);
   if (window.location.protocol === 'file:') {
     $$('[data-online-only]').forEach(element => element.hidden = true);
   }

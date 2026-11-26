@@ -1,4 +1,15 @@
 /* Keep research prose readable on laptop and phone screens. */
+.hero-player{position:relative;aspect-ratio:16/9;background:#102229}
+.hero-player .hero-video{width:100%;height:100%;display:block;object-fit:contain}
+.hero-start{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:#102229;cursor:pointer;color:white}
+.hero-start[hidden]{display:none}
+.hero-start img{display:block;width:100%;height:100%;object-fit:contain}
+.hero-play-label{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;white-space:nowrap;padding:12px 17px;border:1px solid #b9d8cb;border-radius:30px;background:#103b3aeb;font-size:14px;font-weight:600}
+.hero-start:focus-visible{outline:3px solid #9cdbbc;outline-offset:3px}
+.hero-start:disabled .hero-play-label{opacity:.75}
+.hero-playback-status{padding:12px 18px;margin:0;color:#d6e5dd;font-size:14px;line-height:1.5}
+.hero-playback-status[hidden]{display:none}
+.hero-playback-status a{color:#c3e8d3;text-decoration:underline}
 .parallel-intro{font-size:16px;max-width:390px;color:#bbd1c5;line-height:1.7}
 .parallel-scene{margin:0;background:#0c252b;border:1px solid #446456;border-radius:6px;overflow:hidden}
 .parallel-scene video{width:100%;aspect-ratio:16/9;display:block;object-fit:contain}
