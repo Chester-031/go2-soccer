@@ -94,16 +94,34 @@
     $('#timeline-detail').textContent = 'Select a stage to inspect its logged duration and parallel environment count.';
   }
 
-  function renderScoringChart(progress) {
+  function renderScoringChart(progress, stages) {
     const target = $('#scoring-progress-chart');
+    const trainingFocus = {
+      2500: 'Established direct joint-control learning for physically valid scoring, starting from a randomly initialized shooting policy.',
+      4000: 'Retained familiar starting conditions while adding farther and more challenging configurations to the training distribution.',
+      6000: 'Expanded parallel practice from 4,096 to 8,192 environments while continuing the retained starting-state sampling strategy.',
+      8000: 'Retained useful goal feedback after recoverable leg contacts while preserving stricter task and stability requirements for evaluation.',
+      9000: 'Added starting states from recorded misses, with nearby and mirrored variants, alongside retained familiar and broader samples.'
+    };
+    function selectCheckpoint(row, selected) {
+      $$('.scoring-column', target).forEach(button => button.setAttribute('aria-pressed', String(button === selected)));
+      const stage = stages.find(item => item.iteration === row.iteration);
+      $('#checkpoint-title').textContent = `${row.iteration.toLocaleString()} iterations · ${row.label}`;
+      $('#checkpoint-method').textContent = trainingFocus[row.iteration];
+      $('#checkpoint-result').textContent = `${row.percent.toFixed(1)}% · ${row.count} / ${row.n.toLocaleString()}`;
+      $('#checkpoint-time').textContent = `${(stage.seconds / 3600).toFixed(2)} h at this stage · ${stage.envs.toLocaleString()} parallel environments`;
+    }
     const axis = document.createElement('div'); axis.className = 'scoring-axis';
     [100, 75, 50, 25, 0].forEach(value => {
       const tick = document.createElement('span'); tick.textContent = `${value}%`; axis.append(tick);
     });
     const columns = document.createElement('div'); columns.className = 'scoring-columns';
     progress.rows.forEach((row, index) => {
-      const column = document.createElement('div'); column.className = 'scoring-column';
+      const column = document.createElement('button'); column.className = 'scoring-column'; column.type = 'button';
       column.setAttribute('aria-label', `Checkpoint ${row.iteration}: ${row.count} of ${row.n} starts passed, ${row.percent.toFixed(1)} percent`);
+      column.setAttribute('aria-pressed', String(index === progress.rows.length - 1));
+      column.setAttribute('aria-controls', 'checkpoint-design');
+      column.addEventListener('click', () => selectCheckpoint(row, column));
       const bar = document.createElement('div'); bar.className = 'scoring-bar';
       bar.style.height = `${row.percent}%`;
       if (index === progress.rows.length - 1) bar.classList.add('scoring-bar-final');
@@ -117,6 +135,7 @@
     const caption = document.createElement('p'); caption.className = 'scoring-axis-caption';
     caption.textContent = 'PPO iteration · 1,472 fixed evaluation starts per checkpoint';
     target.replaceChildren(plot, caption);
+    selectCheckpoint(progress.rows.at(-1), columns.lastElementChild);
   }
 
   function renderOptimization(stage) {
@@ -163,7 +182,7 @@
   const dataReady = window.GO2_DATA ? Promise.resolve(window.GO2_DATA) : fetch('data.json').then(response => {if (!response.ok) throw new Error('Data unavailable'); return response.json();});
   dataReady.then(data => {
     renderTimeline(data.trainingStages);
-    renderScoringChart(data.shootingProgress);
+    renderScoringChart(data.shootingProgress, data.trainingStages);
     renderOptimization(data.latestOptimization);
     renderDistances(data.distanceBreakdown, data.otherConfigurations);
     renderBenchmarkGroups(data.benchmarkBreakdown);

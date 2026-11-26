@@ -12,9 +12,9 @@
   <title>Go2 Soccer</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="readability.css?v=20261126c">
+  <link rel="stylesheet" href="readability.css?v=20261126d">
   <script src="data.js?v=20261126c" defer></script>
-  <script src="app.js?v=20261126c" defer></script>
+  <script src="app.js?v=20261126d" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -59,7 +59,13 @@
 
     <section id="progress" class="scoring-progress section-wrap">
       <div class="section-heading heading-inline"><div><p class="eyebrow">SCORING PROGRESS</p><h2>From 7.3% to 65.4%<br>stable scoring.</h2></div><p>One fixed 1,472-case benchmark.<br>Task success and stability evaluated together.</p></div>
+      <p class="progress-intro"><strong>From initial policy to stable scoring—what I designed, improved and validated.</strong> I developed the scoring objective, starting-state sampling and evaluation pipeline, then refined the policy through the stages below. Select a checkpoint to connect its training focus with the recorded time and measured result.</p>
       <div id="scoring-progress-chart" class="scoring-progress-chart" aria-label="Stable scoring success improved from 107 of 1,472 cases, 7.3 percent, to 962 of 1,472 cases, 65.4 percent"></div>
+      <div id="checkpoint-design" class="checkpoint-design" aria-live="polite">
+        <div><p class="chart-kicker">SELECTED TRAINING STAGE</p><h3 id="checkpoint-title">9,000 iterations · Targeted starting-state practice</h3><p id="checkpoint-method">Starting states from recorded misses, with nearby and mirrored variants, were added alongside retained familiar and broader samples.</p></div>
+        <div class="checkpoint-result"><strong id="checkpoint-result">65.4% · 962 / 1,472</strong><span>Measured stable scoring</span><p id="checkpoint-time">0.90 h at this stage · 8,192 parallel environments</p></div>
+        <nav aria-label="Explore the research evidence"><a href="#skills">Demonstrated capability</a><a href="#research">My technical contributions</a><a href="#results">Experimental evidence</a></nav>
+      </div>
       <p class="small-note">Recorded evaluations of selected checkpoints on the fixed development benchmark. Each bar counts completed goals that also pass task-event and stability checks—not training reward. Repeated replays can vary slightly.</p>
       <div class="progress-evidence"><strong>+58.1 percentage points</strong><p>Across successive shooting-policy versions, 107 successful starts became 962. This is cumulative progress from changes to rewards, sampling and training duration, measured on the same development benchmark.</p></div>
       <p class="small-note">Stable scoring requires the goal, active-strike and ball-release events, together with strict physical stability. These are simulation results for the standalone shooting policy.</p>
