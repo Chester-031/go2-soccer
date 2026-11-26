@@ -128,12 +128,12 @@
       const value = document.createElement('strong'); value.textContent = `${row.percent.toFixed(1)}%`; bar.append(value);
       const label = document.createElement('div'); label.className = 'scoring-bar-label';
       const iteration = document.createElement('b'); iteration.textContent = `${row.iteration / 1000}k`;
-      const count = document.createElement('span'); count.textContent = `${row.count} passed`;
+      const count = document.createElement('span'); count.textContent = String(row.count);
       label.append(iteration, count); column.append(bar, label); columns.append(column);
     });
     const plot = document.createElement('div'); plot.className = 'scoring-plot'; plot.append(axis, columns);
     const caption = document.createElement('p'); caption.className = 'scoring-axis-caption';
-    caption.textContent = 'PPO iteration · 1,472 fixed evaluation starts per checkpoint';
+    caption.textContent = 'PPO iteration · Passing cases below each bar · 1,472 starts per checkpoint';
     target.replaceChildren(plot, caption);
     selectCheckpoint(progress.rows.at(-1), columns.lastElementChild);
   }
