@@ -1,0 +1,365 @@
+/* A compact research narrative; scoped to avoid changing existing evidence. */
+.hero .story-hero-title {
+  max-width: 14ch;
+  font-size: clamp(3.2rem, 4.6vw, 4.1rem);
+  line-height: 1.12;
+  letter-spacing: -.05em;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+
+.story-overview {
+  padding-top: 70px;
+  padding-bottom: 70px;
+  border-top: 1px solid var(--line);
+}
+
+.story-overview h2 {
+  max-width: 25ch;
+  text-wrap: balance;
+}
+
+.story-intro {
+  max-width: 900px;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.story-intro strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.logic-chain {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 22px;
+  list-style: none;
+  padding: 0;
+  margin: 34px 0 0;
+}
+
+.logic-chain > li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 23px 20px 21px;
+  border: 1px solid #d0e0d7;
+  border-radius: 6px;
+  background: #f3f8f4;
+}
+
+.logic-chain > li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 39px;
+  left: 100%;
+  width: 23px;
+  height: 1px;
+  background: #9bb9aa;
+}
+
+.logic-chain .logic-kicker,
+.logic-chain .kicker {
+  display: block;
+  margin: 0 0 12px;
+  color: var(--teal);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: .055em;
+}
+
+.logic-chain h3 {
+  margin: 0 0 13px;
+  color: var(--ink);
+  font-size: 19px;
+  line-height: 1.3;
+  letter-spacing: -.025em;
+}
+
+.logic-chain p {
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+}
+
+.logic-evidence-link,
+.logic-chain .evidence-link {
+  align-self: flex-start;
+  margin-top: auto;
+  color: var(--teal);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.logic-evidence-link:focus-visible,
+.logic-chain .evidence-link:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 5px;
+  border-radius: 2px;
+}
+
+.story-evidence-nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.story-evidence-nav > a {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 23px 25px;
+  border: 1px solid #cbded2;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+
+.story-evidence-nav > a:hover {
+  border-color: #78a28e;
+  background: #f2f8f3;
+}
+
+.story-evidence-nav > a:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 4px;
+}
+
+.story-evidence-nav small {
+  display: block;
+  margin: 0 0 10px;
+  color: var(--teal);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.story-evidence-nav h3 {
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-size: 19px;
+  line-height: 1.35;
+  letter-spacing: -.025em;
+}
+
+.story-evidence-nav p {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.story-proof {
+  display: block;
+  margin-top: auto;
+  padding-top: 13px;
+  border-top: 1px solid #dce7df;
+  color: var(--teal);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.story-question {
+  max-width: 980px;
+  margin: 32px 0 0;
+  padding: 22px 26px;
+  border-left: 3px solid #40896e;
+  background: #edf5ef;
+  color: var(--deep);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -.015em;
+}
+
+.story-question p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.story-question > strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.story-loop {
+  max-width: 1080px;
+  margin: 22px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid #d4e2d9;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.story-related {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  margin: 22px 0 0;
+  color: #82948b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.story-related a {
+  min-width: 0;
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  overflow-wrap: break-word;
+}
+
+.story-related a:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 5px;
+  border-radius: 2px;
+}
+
+@media (max-width: 1000px) {
+  .logic-chain {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .logic-chain > li {
+    padding: 23px 25px;
+  }
+
+  .logic-chain > li:not(:last-child)::after {
+    top: 100%;
+    left: 29px;
+    width: 1px;
+    height: 21px;
+  }
+
+  .logic-chain h3 {
+    margin-bottom: 10px;
+  }
+
+  .logic-chain p {
+    max-width: 75ch;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 780px) {
+  .hero .story-hero-title {
+    max-width: 16ch;
+    font-size: clamp(2.8rem, 7vw, 3.4rem);
+  }
+
+  .story-overview {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .story-intro {
+    font-size: 16px;
+    margin-top: 21px;
+  }
+
+  .story-evidence-nav {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .story-question {
+    padding: 20px 22px;
+    font-size: 19px;
+  }
+
+  .story-related {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .story-related > span {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero .story-hero-title {
+    font-size: 2.8rem;
+    max-width: 13ch;
+  }
+
+  .logic-chain > li,
+  .story-evidence-nav > a {
+    padding: 22px 20px;
+  }
+
+  .logic-chain > li:not(:last-child)::after {
+    left: 24px;
+  }
+
+  .story-question {
+    padding: 18px 20px;
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-evidence-nav > a {
+    transition: none;
+  }
+}
+
+@media print {
+  .hero .story-hero-title {
+    max-width: none;
+    font-size: 24pt;
+  }
+
+  .story-overview {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .logic-chain,
+  .story-evidence-nav {
+    display: block;
+    margin-top: 18px;
+  }
+
+  .logic-chain > li,
+  .story-evidence-nav > a {
+    break-inside: avoid;
+    background: #fff;
+    margin-bottom: 12px;
+    padding: 14px 17px;
+  }
+
+  .logic-chain > li::after {
+    display: none;
+  }
+
+  .story-question {
+    break-inside: avoid;
+    background: #fff;
+    font-size: 12pt;
+  }
+}
